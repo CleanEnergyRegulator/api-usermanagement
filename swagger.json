@@ -1,450 +1,441 @@
-{
-  "openapi": "3.0.0",
-  "info": {
-    "title": "User Management",
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "/"
-    }
-  ],
-  "security": [
-    {
-      "BasicAuth": []
-    }
-  ],
-  "paths": {
-    "/terms-and-conditions": {
-      "get": {
-        "tags": [
-          "Terms and Conditions"
-        ],
-        "summary": "Returns all Terms and Conditions",
-        "responses": {
-          "200": {
-            "description": "A list of Terms and Conditions.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/terms-and-conditions"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/terms-and-conditions/{id}": {
-      "get": {
-        "tags": [
-          "Terms and Conditions"
-        ],
-        "summary": "Returns Terms and Conditions content",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Email of the user",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of Terms and Conditions.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/terms-and-conditions-content"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/people/{email}/roles/{roleID}/acceptances": {
-      "get": {
-        "tags": [
-          "Acceptance"
-        ],
-        "summary": "Returns all \"accepted\" Terms and Conditions",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "description": "Email of the user",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "roleID",
-            "in": "path",
-            "description": "RoleID",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of previously accepted Terms and Conditions.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/acceptances"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Acceptance"
-        ],
-        "summary": "Records a new acceptance",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "description": "Email of the user",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "roleID",
-            "in": "path",
-            "description": "RoleID",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "An acceptance receipt.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/acceptance"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/people/{email}/roles": {
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "Returns all availble role types.",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "description": "Email of the user",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of roles.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/roles"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/role-types": {
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "Returns all availble role types.",
-        "responses": {
-          "200": {
-            "description": "A list of roles.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/role-types"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "acceptances": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "$ref": "#/components/schemas/acceptance-receipt"
-          }
-        }
-      },
-      "acceptance-receipt": {
-        "required": [
-          "id",
-          "version"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "date": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          }
-        }
-      },
-      "acceptance": {
-        "required": [
-          "id",
-          "version"
-        ],
-        "type": "object",
-        "properties": {
-          "ID": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          }
-        }
-      },
-      "terms-and-conditions": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "$ref": "#/components/schemas/terms-and-conditions-entry"
-          }
-        }
-      },
-      "terms-and-conditions-entry": {
-        "required": [
-          "id",
-          "version"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "effective-from": {
-            "type": "string"
-          },
-          "effective-to": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          }
-        }
-      },
-      "terms-and-conditions-content": {
-        "required": [
-          "id",
-          "version"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "effective-from": {
-            "type": "string"
-          },
-          "effective-to": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "content": {
-            "type": "string"
-          }
-        }
-      },
-      "role-types": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "$ref": "#/components/schemas/role-type"
-          }
-        }
-      },
-      "role-type": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "roles": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "$ref": "#/components/schemas/role"
-          }
-        }
-      },
-      "role": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "role-type-id": {
-            "type": "string"
-          },
-          "organisationId": {
-            "type": "string"
-          }
-        }
-      },
-      "error": {
-        "required": [
-          "code",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "BasicAuth": {
-        "type": "http",
-        "scheme": "basic"
-      }
-    }
-  }
-}
+openapi: 3.0.0
+info:
+  title: User Management
+  version: 1.0.0
+  description: "The API provides a way for scheme to particpants to manage their profile with the CER."
+  
+tags:
+- name: "Invitations"
+  description: "Invite another users to perform a task."
+  
+- name: "Terms and Conditions"
+  description: "Get available terms and conditions."
+
+- name: "Acceptance"
+  description: "Accept terms and conditions."
+  
+- name: "Roles"
+  description: "Get a list your associated roles."  
+
+paths:
+  /invitations:
+    get:
+      summary: 'Returns all invitations'
+      tags:
+        - Invitations
+      responses:
+        '200':
+          description: 'A list of invitations.'
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/invitation'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/error' 
+   
+    post:
+      summary: 'Send a new invitation'
+      tags:
+        - Invitations
+      responses:
+        '200':
+          description: 'An invitation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invitation'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error' 
+                
+  /invitations/{id}:
+    get:
+      summary: 'Returns an invitation'
+      tags:
+        - Invitations
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'An invitation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invitation'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error' 
+
+  /invitations/{id}/redeem:
+    put:
+      summary: 'Redeems an existing invitation'
+      tags:
+        - Invitations
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'An invitation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invitation'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error' 
+
+  /invitations/{id}/cancel:
+    put:
+      summary: 'Cancels an existing invitation'
+      tags:
+        - Invitations
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'An invitation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invitation'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error' 
+
+  /terms-and-conditions:
+    get:
+      tags:
+        - Terms and Conditions
+      summary: Returns all Terms and Conditions
+      responses:
+        '200':
+          description: A list of Terms and Conditions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/terms-and-conditions'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /terms-and-conditions/{id}:
+    get:
+      tags:
+        - Terms and Conditions
+      summary: Returns Terms and Conditions content
+      parameters:
+        - name: id
+          in: path
+          description: Email of the user
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Terms and Conditions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/terms-and-conditions-content'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+                
+  /people/{email}/roles/{roleID}/acceptances:
+    get:
+      tags:
+        - Acceptance
+      summary: Returns all "accepted" Terms and Conditions
+      parameters:
+        - name: email
+          in: path
+          description: Email of the user
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: roleID
+          in: path
+          description: RoleID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of previously accepted Terms and Conditions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acceptances'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      tags:
+        - Acceptance
+      summary: Records a new acceptance
+      parameters:
+        - name: email
+          in: path
+          description: Email of the user
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: roleID
+          in: path
+          description: RoleID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An acceptance receipt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acceptance'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /people/{email}/roles:
+    get:
+      tags:
+        - Roles
+      summary: Returns all availble role types.
+      parameters:
+        - name: email
+          in: path
+          description: Email of the user
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of roles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roles'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /role-types:
+    get:
+      tags:
+        - Roles
+      summary: Returns all availble role types.
+      responses:
+        '200':
+          description: A list of roles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/role-types'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  schemas:
+    acceptances:
+      type: object
+      properties:
+        items:
+          $ref: '#/components/schemas/acceptance-receipt'
+    acceptance-receipt:
+      required:
+        - id
+        - version
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        title:
+          type: string
+        date:
+          type: string
+        status:
+          type: string
+    acceptance:
+      required:
+        - id
+        - version
+      type: object
+      properties:
+        ID:
+          type: string
+        version:
+          type: string
+    terms-and-conditions:
+      type: object
+      properties:
+        items:
+          $ref: '#/components/schemas/terms-and-conditions-entry'
+    terms-and-conditions-entry:
+      required:
+        - id
+        - version
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        title:
+          type: string
+        effective-from:
+          type: string
+        effective-to:
+          type: string
+        status:
+          type: string
+    terms-and-conditions-content:
+      required:
+        - id
+        - version
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        title:
+          type: string
+        effective-from:
+          type: string
+        effective-to:
+          type: string
+        status:
+          type: string
+        content:
+          type: string
+    role-types:
+      type: object
+      properties:
+        items:
+          $ref: '#/components/schemas/role-type'
+    role-type:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    roles:
+      type: object
+      properties:
+        items:
+          $ref: '#/components/schemas/role'
+    role:
+      type: object
+      properties:
+        id:
+          type: string
+        role-type-id:
+          type: string
+        organisationId:
+          type: string
+    error:
+      required:
+        - code
+        - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+          
+    invitation:
+      type: object
+      required:
+        - type
+        - inviter-email    
+        - invitee-email
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+        inviter-email:
+          type: string
+        invitee-email:
+          type: string
+        created-date:
+          type: string
+        completed-date:
+          type: string
+        organisation-id:
+          type: string
+    
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
