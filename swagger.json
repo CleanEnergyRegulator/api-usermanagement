@@ -5,7 +5,7 @@ info:
   description: "The API provides a way for scheme to particpants to manage their profile with the CER."
   
 tags:
-- name: "Invitations"
+- name: "Tasks"
   description: "Invite another users to perform a task."
   
 - name: "Terms and Conditions"
@@ -18,20 +18,20 @@ tags:
   description: "Get a list your associated roles."  
 
 paths:
-  /invitations:
+  /tasks:
     get:
-      summary: 'Returns all invitations'
+      summary: 'Returns all tasks'
       tags:
-        - Invitations
+        - Tasks
       responses:
         '200':
-          description: 'A list of invitations.'
+          description: 'A list of tasks.'
           content:
             application/json:
               schema:
                 type: "array"
                 items:
-                  $ref: '#/components/schemas/invitation'
+                  $ref: '#/components/schemas/task'
         default:
           description: Unexpected error
           content:
@@ -42,16 +42,16 @@ paths:
                   $ref: '#/components/schemas/error' 
    
     post:
-      summary: 'Send a new invitation'
+      summary: 'Send a new task'
       tags:
-        - Invitations
+        - Tasks
       responses:
         '200':
-          description: 'An invitation.'
+          description: 'An task.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/invitation'
+                $ref: '#/components/schemas/task'
         default:
           description: Unexpected error
           content:
@@ -59,11 +59,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/error' 
                 
-  /invitations/{id}:
+  /tasks/{id}:
     get:
-      summary: 'Returns an invitation'
+      summary: 'Returns an task'
       tags:
-        - Invitations
+        - Tasks
       parameters:
         - name: id
           in: path
@@ -73,11 +73,11 @@ paths:
             type: string
       responses:
         '200':
-          description: 'An invitation.'
+          description: 'An task.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/invitation'
+                $ref: '#/components/schemas/task'
         default:
           description: Unexpected error
           content:
@@ -85,11 +85,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/error' 
 
-  /invitations/{id}/redeem:
+  /tasks/{id}/redeem:
     put:
-      summary: 'Redeems an existing invitation'
+      summary: 'Redeems an existing task'
       tags:
-        - Invitations
+        - Tasks
       parameters:
         - name: id
           in: path
@@ -99,11 +99,11 @@ paths:
             type: string
       responses:
         '200':
-          description: 'An invitation.'
+          description: 'An task.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/invitation'
+                $ref: '#/components/schemas/task'
         default:
           description: Unexpected error
           content:
@@ -111,11 +111,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/error' 
 
-  /invitations/{id}/cancel:
+  /tasks/{id}/cancel:
     put:
-      summary: 'Cancels an existing invitation'
+      summary: 'Cancels an existing task'
       tags:
-        - Invitations
+        - Tasks
       parameters:
         - name: id
           in: path
@@ -125,11 +125,11 @@ paths:
             type: string
       responses:
         '200':
-          description: 'An invitation.'
+          description: 'An task.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/invitation'
+                $ref: '#/components/schemas/task'
         default:
           description: Unexpected error
           content:
@@ -411,7 +411,7 @@ components:
         message:
           type: string
           
-    invitation:
+    task:
       type: object
       required:
         - type
