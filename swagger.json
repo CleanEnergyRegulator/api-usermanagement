@@ -85,7 +85,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error' 
 
-  /tasks/{id}/redeem:
+  /tasks/{id}/accept:
     put:
       summary: 'Redeems an existing task'
       tags:
@@ -136,6 +136,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error' 
+
+  /tasks/{id}/reject:
+    put:
+      summary: 'Reject an existing task'
+      tags:
+        - Tasks
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'An task.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error' 
+
 
   /terms-and-conditions:
     get:
