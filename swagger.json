@@ -5,6 +5,10 @@ info:
   description: "The API provides a way for scheme to particpants to manage their profile with the CER."
   
 tags:
+
+- name: "Business"
+  description: "Manage detials of my businesses"
+
 - name: "Tasks"
   description: "Invite another users to perform a task."
   
@@ -17,7 +21,53 @@ tags:
 - name: "Roles"
   description: "Get a list your associated roles."  
 
+
 paths:
+  /business:
+    get:
+      summary: 'Return your related businesses'
+      tags:
+        - Business
+      responses:
+        '200':
+          description: 'A list of businesses.'
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/business'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/error' 
+
+  /business/{id}/default:
+    put:
+      summary: 'Mark a business as your default'
+      tags:
+        - Business
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'An task.'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error' 
+
   /tasks:
     get:
       summary: 'Returns all tasks'
@@ -436,6 +486,19 @@ components:
           type: integer
           format: int32
         message:
+          type: string
+
+    business:
+      type: object
+      required:
+        - id
+        - name    
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        identifier:
           type: string
           
     task:
